@@ -83,6 +83,13 @@ class Game:
             #         self.player.move(dy=-1)
             #     if event.key == pg.K_DOWN:
             #         self.player.move(dy=1)
+    def draw_text(self, surface, text, size, color, x, y):
+        font_name = pg.font.match_font('arial')
+        font = pg.font.Font(font_name, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text.surface.get_rect()
+        text_rect.topleft = (x*TILE_SIZE, y*TILE_SIZE)
+        surface.blit(text_surface, text_rect)
 
     def show_start_screen(self):
         pass

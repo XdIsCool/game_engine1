@@ -23,53 +23,54 @@ class Player(Sprite):
         #     self.x += dx
         #     self.y += dy
 
-        def get_keys(self):
-            self.vx, self.vy = 0, 0
-            keys = pg.key.get_pressed()
-            if keys[pg.K_LEFT] or keys[pg.K_a]:
-                self.vx = -PLAYER_SPEED
-            if keys[pg.K_RIGHT] or keys[pg.K_d]:
-                self.vx = PLAYER_SPEED
-            if keys[pg.K_UP] or keys[pg.K_w]:
-                self.vy = -PLAYER_SPEED
-            if keys[pg.K_DOWN] or keys[pg.K_s]:
-                self.vy = PLAYER_SPEED
-            if self.vx != 0 and self.vy != 0:
-                self.vx *= 0.7071
-                self.vy *= 0.7071 #this is to cancel out moving faster diagonally
-        def collide_with_walls(self, dir):
+    def get_keys(self):
+        self.vx, self.vy = 0, 0
+        keys = pg.key.get_pressed()
+        if keys[pg.K_LEFT] or keys[pg.K_a]:
+            self.vx = -PLAYER_SPEED
+        if keys[pg.K_RIGHT] or keys[pg.K_d]:
+            self.vx = PLAYER_SPEED
+        if keys[pg.K_UP] or keys[pg.K_w]:
+            self.vy = -PLAYER_SPEED
+        if keys[pg.K_DOWN] or keys[pg.K_s]:
+            self.vy = PLAYER_SPEED
+        if self.vx != 0 and self.vy != 0:
+            self.vx *= 0.7071
+            self.vy *= 0.7071 #this is to cancel out moving faster diagonally
+
+    def collide_with_walls(self, dir):
+        if dir == 'x':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect_left = self.rect.walls
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                self.vx = 0
+                self.rect.x = self.x
             if dir == 'x':
                 hits = pg.sprite.spritecollide(self, self.game.walls, False)
                 if hits:
                     if self.vx > 0:
-                        self.x = hits[0].rect_left = self.rect.WIDTH
+                        self.x = hits[0].rect.left = self.rect.width
                     if self.vx < 0:
                         self.x = hits[0].rect.right
                     self.vx = 0
                     self.rect.x = self.x
-                if dir == 'x':
-                    hits = pg.sprite.spritecollide(self, self.game.walls, False)
-                    if hits:
-                        if self.vx > 0:
-                            self.x = hits[0].rect.left = self.rect.width
-                        if self.vx < 0:
-                            self.x = hits[0].rect.right
-                        self.vx = 0
-                        self.rect.x = self.x
                 
 
-        def update(self): 
-            #self.rect.x = self.x * TILE_SIZE
-            #self.rect.y = self.y * TILE_SIZE
-            self.get_keys()
-            self.x += self.vx * self.game.dt
-            self.y += self.vy * self.game.dt
-            #self.rect.x = self.x
-            # add x collision later
-            self.collide_with_walls('x')
-            self.rect.y = self.y
-            #add y collision later
-            # add y collision later
+    def update(self): 
+        #self.rect.x = self.x * TILE_SIZE
+        #self.rect.y = self.y * TILE_SIZE
+        self.get_keys()
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+        #self.rect.x = self.x
+        # add x collision later
+        self.collide_with_walls('x')
+        self.rect.y = self.y
+        #add y collision later
+        # add y collision later
 
 # creating a wall class 
 class Wall(Sprite):
