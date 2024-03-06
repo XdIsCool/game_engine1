@@ -3,14 +3,14 @@
 from settings import *
 import pygame as pg
 from pygame.sprite import Sprite
-from settings import *
+from random import choice
 #creating a player class
 #Capital "player" is advised rather than lowercase
 #creating a player class
 class Player(Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
-        Sprite.__init__(self, self.groups)
+        pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(blue)
@@ -62,13 +62,22 @@ class Player(Sprite):
     def update(self): 
         #self.rect.x = self.x * TILE_SIZE
         #self.rect.y = self.y * TILE_SIZE
-        self.get_keys()
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
-        #self.rect.x = self.x
+
+        # if self.rect.x < self.game.player.rect.x:
+        #     self.vx = 100
+        # if self.rect.x > self.game.player.rect.x:
+        #     self.vx = -100
+        # if self.rect.y < self.game.player.rect.y:
+        #     self.vy = 100
+        # if self.rect.y > self.game.player.rect.y:
+        #     self.vy = -100
+        # self.rect.x = self.x
         # add x collision later
         self.collide_with_walls('x')
         self.rect.y = self.y
+        self.collide_with_walls('y')
         #add y collision later
         # add y collision later
 
@@ -85,6 +94,9 @@ class Wall(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
+class Health(Sprite):
+    pass 
 
         
 
