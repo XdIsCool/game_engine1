@@ -5,7 +5,7 @@ import pygame as pg
 import sys
 from settings import *
 from sprites import *
-from random import randint
+# from random import randint
 from os import path
 from time import sleep
 
