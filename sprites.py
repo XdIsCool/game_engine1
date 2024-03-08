@@ -34,7 +34,7 @@ class Player(Sprite):
             self.vy = -PLAYER_SPEED
         if keys[pg.K_DOWN] or keys[pg.K_s]:
             self.vy = PLAYER_SPEED
-        if self.vx != 0 and self.vy != 0:
+        if self.vx != 0 and self.vy != 0: 
             self.vx *= 0.7071
             self.vy *= 0.7071 #this is to cancel out moving faster diagonally
 
