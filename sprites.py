@@ -62,9 +62,9 @@ class Player(Sprite):
     def update(self): 
         #self.rect.x = self.x * TILE_SIZE
         #self.rect.y = self.y * TILE_SIZE
+        self.get_keys() 
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
-
         # if self.rect.x < self.game.player.rect.x:
         #     self.vx = 100
         # if self.rect.x > self.game.player.rect.x:
@@ -73,7 +73,7 @@ class Player(Sprite):
         #     self.vy = 100
         # if self.rect.y > self.game.player.rect.y:
         #     self.vy = -100
-        # self.rect.x = self.x
+        self.rect.x = self.x
         # add x collision later
         self.collide_with_walls('x')
         self.rect.y = self.y
