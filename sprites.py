@@ -96,7 +96,7 @@ class Wall(Sprite):
         self.rect.y = y * TILE_SIZE
 
 class Health(Sprite):
-    pass 
+    pass
 
         
 
