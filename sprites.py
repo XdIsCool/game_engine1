@@ -58,7 +58,6 @@ class Player(Sprite):
                     self.vx = 0
                     self.rect.x = self.x
                 
-
     def update(self): 
         #self.rect.x = self.x * TILE_SIZE
         #self.rect.y = self.y * TILE_SIZE
