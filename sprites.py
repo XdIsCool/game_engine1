@@ -62,7 +62,7 @@ class Player(Sprite):
     def update(self): 
         #self.rect.x = self.x * TILE_SIZE
         #self.rect.y = self.y * TILE_SIZE
-        self.get_keys() 
+        self.get_keys()
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
         # if self.rect.x < self.game.player.rect.x:
