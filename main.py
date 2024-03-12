@@ -90,7 +90,6 @@ class Game:
         text_rect = text.surface.get_rect()
         text_rect.topleft = (x*TILE_SIZE, y*TILE_SIZE)
         surface.blit(text_surface, text_rect)
-
     def show_start_screen(self):
         pass
 
