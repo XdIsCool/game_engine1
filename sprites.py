@@ -48,15 +48,15 @@ class Player(Sprite):
                     self.x = hits[0].rect.right
                 self.vx = 0
                 self.rect.x = self.x
-            if dir == 'x':
-                hits = pg.sprite.spritecollide(self, self.game.walls, False)
-                if hits:
-                    if self.vx > 0:
-                        self.x = hits[0].rect.left = self.rect.width
-                    if self.vx < 0:
-                        self.x = hits[0].rect.right
-                    self.vx = 0
-                    self.rect.x = self.x
+        if dir == 'y':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vy > 0:
+                    self.y = hits[0].rect.top = - self.rect.height
+                if self.vy < 0:
+                    self.y = hits[0].rect.bottom
+                self.vy = 0
+                self.rect.y = self.y
                 
     def update(self): 
         #self.rect.x = self.x * TILE_SIZE
@@ -93,6 +93,9 @@ class Wall(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
+# class Wall_Eater(Sprite):
+#     pass
 
 # class Health(Sprite):
 #     pass
