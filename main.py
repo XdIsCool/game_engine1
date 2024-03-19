@@ -42,12 +42,14 @@ class Game:
             for col, tile in enumerate(tiles):
                 # print(col)
                 # print(tiles)
-                if tile == '1':
+                if tile == '1': #1 =  tile
                     Wall(self, col, row)
-                if tile == 'P':
+                if tile == 'P': #P = player tile
                     self.player = Player(self, col, row)
-                if tile == 'U':  # Assuming 'U' represents a power-up in your map
+                if tile == 'U':  #U = size power up
                     PowerUp(self, col, row)
+                if tile == 'B': #B = mob tile
+                    pass
     def run(self):
         self.playing = True
         while self.playing:
