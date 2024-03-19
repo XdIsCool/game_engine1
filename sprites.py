@@ -1,14 +1,16 @@
-#This file was created by: Abhi Bejgam
-#importing important modules
+# This file was created by: Abhi Bejgam
+# importing important modules
 from settings import *
 import pygame as pg
 from pygame.sprite import Sprite
 from random import choice
-vec =pg.math.Vector2
 
-#creating a player class
-#Capital "player" is advised rather than lowercase
-#creating a player class
+vec = pg.math.Vector2
+
+
+# creating a player class
+# Capital "player" is advised rather than lowercase
+# creating a player class
 class Player(Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
@@ -20,13 +22,7 @@ class Player(Sprite):
         self.vx, self.vy = 0, 0
         self.x = x * TILE_SIZE
         self.y = y * TILE_SIZE
-
-    def collect_Wall_Eater(self, Wall_Eater):
-        for wall in self.game.walls:
-            wall.change_color(NEW_WALL_COLOR)
-
-        self.wall_change_timer = 0
-        
+        self.wall_change_timer = 0  # Add this line
 
         # def move(self, dx=0, dy=0):
         #     self.x += dx
@@ -43,9 +39,9 @@ class Player(Sprite):
             self.vy = -PLAYER_SPEED
         if keys[pg.K_DOWN] or keys[pg.K_s]:
             self.vy = PLAYER_SPEED
-        if self.vx != 0 and self.vy != 0: 
+        if self.vx != 0 and self.vy != 0:
             self.vx *= 0.7071
-            self.vy *= 0.7071 #this is to cancel out moving faster diagonally
+            self.vy *= 0.7071  # this is to cancel out moving faster diagonally
 
     def collide_with_walls(self, dir):
         if dir == 'x':
@@ -65,41 +61,40 @@ class Player(Sprite):
                 if self.vy < 0:
                     self.y = hits[0].rect.bottom
                 self.vy = 0
-                self.rect.y = self.y 
-                
-    def update(self): 
-        #self.rect.x = self.x * TILE_SIZE
-        #self.rect.y = self.y * TILE_SIZE
+                self.rect.y = self.y
+
+    def update(self):
         self.get_keys()
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
-        # if self.rect.x < self.game.player.rect.x:
-        #     self.vx = 100
-        # if self.rect.x > self.game.player.rect.x:
-        #     self.vx = -100
-        # if self.rect.y < self.game.player.rect.y:
-        #     self.vy = 100
-        # if self.rect.y > self.game.player.rect.y:
-        #     self.vy = -100
         self.rect.x = self.x
-        # add x collision later
         self.collide_with_walls('x')
         self.rect.y = self.y
         self.collide_with_walls('y')
 
-        Wall_Eater_hits = pg.sprite.spritecollide(self, self.game.Wall_Eater, True)
+        # Power-up collision detection should occur within the update method
+        # or within the game loop, not in the __init__ method of the PowerUp class.
+        power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,
+                                                True)  # True to remove the sprite on collision
+        for power_up in power_up_hits:
+            self.collect_power_up(power_up)
 
+        # Add a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
+            # Change the color of all walls
             for wall in self.game.walls:
-                wall.change_color(yellow)
-            self.wall_change_timer = 0
-    
-        for Wall_Eater in Wall_Eater_hits: 
-            self.collect_Wall_Eater(Wall_Eater)
-        #add y collision later
-        # add y collision later
+                wall.change_color(silver)
+            self.wall_change_timer = 0  # Reset the timer
 
-# creating a wall class 
+    # Add a new method to the Player class
+    def collect_power_up(self, power_up):
+        print("Power-up collected!")
+        for wall in self.game.walls:
+            wall.change_color(NEW_WALL_COLOR)
+        # Change the color of all walls
+            self.wall_change_timer = pg.time.get_ticks()  # Start the timer when a power-up is collected
+
+# creating a wall class
 class Wall(Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
@@ -112,25 +107,26 @@ class Wall(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
-    
-    def change_color(self, new_color):
-        self.image.fill(new_color)
 
-class Wall_Eater(pg.sprite.Sprite):
+    def change_color(self, new_color):
+        self.image.fill(new_color)  # Fill the wall's surface with the new color
+
+
+class PowerUp(pg.sprite.Sprite):
     def __init__(self, game, x, y):
-        self.groups = game.all_sprites, game.Wall_Eater
+        self.groups = game.all_sprites, game.power_ups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
-        self.image.fill(green)
+        self.image.fill(green)  # Choose an appropriate color for the power-up
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
 
-
-    
+# class Wall_Eater(Sprite):
+#     pass
 
 # class Health(Sprite):
 #     pass
