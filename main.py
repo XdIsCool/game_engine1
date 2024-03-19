@@ -44,8 +44,8 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
-                if tile == 'U':
-                    Mob(self, col, row)
+                # if tile == 'U':
+                #     Mob(self, col, row)
     def run(self):
         self.playing = True
         while self.playing:
