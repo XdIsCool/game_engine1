@@ -88,7 +88,6 @@ class Player(Sprite):
 
     # Add a new method to the Player class
     def collect_power_up(self, power_up):
-        print("Power-up collected!")
         for wall in self.game.walls:
             wall.change_color(NEW_WALL_COLOR)
         # Change the color of all walls
