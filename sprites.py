@@ -108,10 +108,10 @@ class Mob(Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         # self.image = game.mob_img
-        # self.image = pg.Surface((TILESIZE, TILESIZE))
-        # self.image.fill(ORANGE)
-        self.image = self.game.mob2_img
-        self.image.set_colorkey(green)
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(yellow)
+        # self.image = self.game.mob2_img
+        # self.image.set_colorkey(green)
         self.rect = self.image.get_rect()
         # self.hit_rect = MOB_HIT_RECT.copy()
         # self.hit_rect.center = self.rect.center
@@ -152,9 +152,10 @@ class Mob(Sprite):
                         self.y = hits[0].rect.bottom
                     self.vy = 0
                     self.rect.y = self.y 
+
         def update(self):
             if self.hitpoints < 1:
-                print("mob2 should be dead")
+                print("mob2 is now dead")
                 self.kill()
             self.sensor()
             if self.chasing:

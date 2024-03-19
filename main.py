@@ -32,6 +32,7 @@ class Game:
         # initializing all variables and setup groups, and instantiating classes
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
+        self.mobs = pg.sprite.Group()
         # self.player = Player(self, 10, 10)
         # for x in range(10, 20):
         #     Wall(self, x, 5)
@@ -43,8 +44,8 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
-                #if tile == 'U':
-                    #Powerup (self, col, row)
+                if tile == 'U':
+                    Mob(self, col, row)
     def run(self):
         self.playing = True
         while self.playing:
