@@ -21,6 +21,13 @@ class Player(Sprite):
         self.x = x * TILE_SIZE
         self.y = y * TILE_SIZE
 
+    def collect_Wall_Eater(self, Wall_Eater):
+        for wall in self.game.walls:
+            wall.change_color(NEW_WALL_COLOR)
+
+        self.wall_change_timer = 0
+        
+
         # def move(self, dx=0, dy=0):
         #     self.x += dx
         #     self.y += dy
@@ -79,6 +86,16 @@ class Player(Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.y
         self.collide_with_walls('y')
+
+        Wall_Eater_hits = pg.sprite.spritecollide(self, self.game.Wall_Eater, True)
+
+        if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
+            for wall in self.game.walls:
+                wall.change_color(yellow)
+            self.wall_change_timer = 0
+    
+        for Wall_Eater in Wall_Eater_hits: 
+            self.collect_Wall_Eater(Wall_Eater)
         #add y collision later
         # add y collision later
 
@@ -95,9 +112,25 @@ class Wall(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+    
+    def change_color(self, new_color):
+        self.image.fill(new_color)
 
-# class Wall_Eater(Sprite):
-#     pass
+class Wall_Eater(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.Wall_Eater
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(green)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILE_SIZE
+        self.rect.y = y * TILE_SIZE
+
+
+    
 
 # class Health(Sprite):
 #     pass

@@ -21,4 +21,6 @@ lightgrey= (255,255,255)
 silver = (192,192,192)
 BGCOLOR= (255,215,0) 
 
+NEW_WALL_COLOR = white
+
 
