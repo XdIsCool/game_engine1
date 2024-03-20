@@ -232,6 +232,60 @@ class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
             # self.rect.center = self.hit_rect.center
             if self.hitpoints <= 0:
                 self.kill() 
+    
+class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.mobs
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        Mob2.hitpoints = 100
+        # self.image = game.mob_img
+        # self.image = pg.Surface((TILESIZE, TILESIZE))
+        # self.image.fill(ORANGE)
+        self.image = self.game.mob2_img
+        self.image.set_colorkey(yellow)
+        self.rect = self.image.get_rect()
+        # self.hit_rect = MOB_HIT_RECT.copy()
+        # self.hit_rect.center = self.rect.center
+        self.pos = vec(x, y) * TILE_SIZE
+        self.vel = vec(0, 0)
+        self.acc = vec(0, 0)
+        self.rect.center = self.pos
+        self.rot = 0
+        self.chase_distance = 500
+        # added
+        self.speed = 200
+        self.chasing = False
+        # self.health = MOB_HEALTH
+        self.hitpoints = 5
+    def sensor(self):
+        if abs(self.rect.x - self.game.player.rect.x) < self.chase_distance and abs(self.rect.y - self.game.player.rect.y) < self.chase_distance:
+            self.chasing = True
+        else:
+            self.chasing = False
+    def update(self):
+        if self.hitpoints < 1:
+            self.kill()
+        self.sensor()
+        if self.chasing:
+            self.rot = (self.game.player.rect.center - self.pos).angle_to(vec(1, 0))
+            # self.image = pg.transform.rotate(self.image, 45)
+            # self.rect = self.image.get_rect()
+            self.rect.center = self.pos
+            self.acc = vec(self.speed, 0).rotate(-self.rot)
+            self.acc += self.vel * 0.
+            self.vel += self.acc * self.game.dt
+            # equation of motion needed here (F=ma)
+            self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
+            # self.hit_rect.centerx = self.pos.x
+            self.rect.centerx = self.pos.x
+            collide_with_walls(self, self.game.walls, 'x')
+            # self.hit_rect.centery = self.pos.y
+            self.rect.centery = self.pos.y
+            collide_with_walls(self, self.game.walls, 'y')
+            # self.rect.center = self.hit_rect.center
+            if self.hitpoints <= 0:
+                self.kill()
 
 # class Health(Sprite):
 #     pass

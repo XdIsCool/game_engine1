@@ -68,6 +68,8 @@ class Game:
                     PowerUp(self, col, row)
                 if tile == 'B': #B = mob tile
                     Mob2(self, col, row)
+                if tile == 'H': #
+                    Mob3(self, col, row)
                     
     def run(self):
         self.playing = True
