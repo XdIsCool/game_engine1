@@ -40,7 +40,7 @@ class Player(Sprite):
         self.image.fill(blue)
         self.speed = 150
         self.speed2 = 400
-        self.hitpoints = 100
+        Player.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILE_SIZE
@@ -55,13 +55,13 @@ class Player(Sprite):
         self.vx, self.vy = 0, 0
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT] or keys[pg.K_a]:
-            self.vx = -PLAYER_SPEED
+            self.vx = -self.speed
         if keys[pg.K_RIGHT] or keys[pg.K_d]:
-            self.vx = PLAYER_SPEED
+            self.vx = self.speed
         if keys[pg.K_UP] or keys[pg.K_w]:
-            self.vy = -PLAYER_SPEED
+            self.vy = -self.speed
         if keys[pg.K_DOWN] or keys[pg.K_s]:
-            self.vy = PLAYER_SPEED
+            self.vy = self.speed
         if self.vx != 0 and self.vy != 0:
             self.vx *= 0.7071
             self.vy *= 0.7071  # this is to cancel out moving faster diagonally
@@ -88,10 +88,12 @@ class Player(Sprite):
     def collide_with_group(self, group, kill): #collision killing def
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
-            if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp
-                self.collide_with_group(self, self.speed2, True)    
+            # if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp   
             if str(hits[0].__class__.__name__) == "Mob2":
-                Mob2.hitpoints < 0
+                Player.hitpoints < 0
+            if Player.hitpoints < 0:
+                Player.kill()
+            self.speed += 200 #when player kills mob, the player speed goes up
     def update(self): 
         self.get_keys()
         self.x += self.vx * self.game.dt
@@ -101,6 +103,9 @@ class Player(Sprite):
         self.rect.y = self.y
         self.collide_with_walls('y')
         self.collide_with_group(self.game.mobs, True)
+        if Player.hitpoints < 0:
+                Player.kill()
+        
 
         # Power-up collision detection should occur within the update method
         # or within the game loop, not in the __init__ method of the PowerUp class
@@ -195,7 +200,7 @@ class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.rot = 0
         self.chase_distance = 500
         # added
-        self.speed = 150
+        self.speed = 200
         self.chasing = False
         # self.health = MOB_HEALTH
         self.hitpoints = 5
