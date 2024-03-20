@@ -8,6 +8,8 @@ from sprites import *
 # from random import randint
 from os import path
 from time import sleep
+from images import *
+from os import path
 
 # creating the game class
 class Game:
@@ -21,7 +23,12 @@ class Game:
         self.load_data()
     # loading the game's saving data 
     def load_data(self):
+        self.game_folder = path.dirname(__file__)
+        self.img_folder = path.join(self.game_folder, 'images') 
         game_folder = path.dirname(__file__)
+
+        self.mob2_img = pg.image.load(path.join(self.img_folder, 'autobot.png')).convert_alpha()
+
         self.map_data = []
         with open(path.join(game_folder, 'map.txt'), 'rt') as f:
             for line in f:
@@ -49,7 +56,7 @@ class Game:
                 if tile == 'U':  #U = size power up
                     PowerUp(self, col, row)
                 if tile == 'B': #B = mob tile
-                    pass
+                    Mob2(self, col, row)
     def run(self):
         self.playing = True
         while self.playing:
