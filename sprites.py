@@ -9,7 +9,7 @@ from images import *
 
 vec = pg.math.Vector2
 
-def collide_with_walls(sprite, group, dir):
+def collide_with_walls(sprite, group, dir): #defining collide_with_walls so Mob2 can use it
     if dir == 'x':
         hits = pg.sprite.spritecollide(sprite, group, False)
         if hits:
@@ -50,7 +50,7 @@ class Player(Sprite):
         #     self.x += dx
         #     self.y += dy
 
-    def get_keys(self):
+    def get_keys(self): #Movement via wasd or arrow keys
         self.vx, self.vy = 0, 0
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT] or keys[pg.K_a]:
@@ -87,21 +87,11 @@ class Player(Sprite):
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
-        #     if str(hits[0].__class__.__name__) == "Coin":
-        #         self.moneybag += 1
-            if str(hits[0].__class__.__name__) == "PowerUp":
-        #         print(hits[0].__class__.__name__)
-        #         # self.game.collect_sound.play()
-        #         effect = choice(POWER_UP_EFFECTS)
-        #         self.game.cooldown.cd = 5
-        #         self.cooling = True
-        #         print(self.cooling)
+            if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp
                 self.speed += 200
-        #         if effect == "Invincible":
-        #             self.status = "Invincible"
             if str(hits[0].__class__.__name__) == "Mob2":
                 self.hitpoints <= 1
-    def update(self):
+    def update(self): 
         self.get_keys()
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
@@ -120,7 +110,7 @@ class Player(Sprite):
 
         # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
-            # Change the color of all walls
+            # Changed the color of all walls
             for wall in self.game.walls:
                 wall.change_color(silver)
             self.wall_change_timer = 0  # Reset the timer
@@ -148,23 +138,23 @@ class Wall(Sprite):
         self.rect.y = y * TILE_SIZE
 
     def change_color(self, new_color):
-        self.image.fill(new_color)  # Fill the wall's surface with the new color
+        self.image.fill(new_color)  # Filling the wall's surface with the new color
 
 
-class PowerUp(pg.sprite.Sprite):
+class PowerUp(pg.sprite.Sprite): #added PowerUp class
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.power_ups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
-        self.image.fill(green)  # Choose an appropriate color for the power-up
+        self.image.fill(green)  
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
 
-class Mob2(pg.sprite.Sprite):
+class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
@@ -195,7 +185,6 @@ class Mob2(pg.sprite.Sprite):
             self.chasing = False
     def update(self):
         if self.hitpoints < 1:
-            print("mob2 should be dead")
             self.kill()
         self.sensor()
         if self.chasing:
@@ -206,7 +195,7 @@ class Mob2(pg.sprite.Sprite):
             self.acc = vec(self.speed, 0).rotate(-self.rot)
             self.acc += self.vel * 0.
             self.vel += self.acc * self.game.dt
-            # equation of motion
+            # equation of motion needed here (F=ma)
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
             # self.hit_rect.centerx = self.pos.x
             self.rect.centerx = self.pos.x
