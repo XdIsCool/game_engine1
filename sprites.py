@@ -39,6 +39,7 @@ class Player(Sprite):
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(blue)
         self.speed = 150
+        self.speed2 = 400
         self.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
@@ -88,7 +89,7 @@ class Player(Sprite):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp
-                self.speed += 200
+                self.collide_with_group(self, self.speed2, True)    
             if str(hits[0].__class__.__name__) == "Mob2":
                 self.hitpoints <= 1
     def update(self): 
