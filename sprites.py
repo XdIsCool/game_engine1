@@ -120,6 +120,25 @@ class Player(Sprite):
     def collect_power_up(self, power_up):
         for wall in self.game.walls:
             wall.change_color(NEW_WALL_COLOR)
+        # def collide_with_walls(self, dir): #tried to add wall eating ability
+        #     if dir == 'x':
+        #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
+        #         if hits:
+        #             if self.vx > 0:
+        #                 self.x = hits[0].rect.left - self.rect.width
+        #             if self.vx < 0:
+        #                 self.x = hits[0].rect.right
+        #             self.vx = 0
+        #             self.rect.x = self.x
+        #     if dir == 'y':
+        #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
+        #         if hits:
+        #             if self.vy > 0:
+        #                 self.y = hits[0].rect.top - self.rect.height
+        #             if self.vy < 0:
+        #                 self.y = hits[0].rect.bottom
+        #             self.vy = 0
+        #             self.rect.y = self.y 
         
         # Change the color of all walls
             self.wall_change_timer = pg.time.get_ticks()  # Start the timer when a power-up is collected
