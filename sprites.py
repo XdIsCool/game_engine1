@@ -85,13 +85,13 @@ class Player(Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
-    def collide_with_group(self, group, kill):
+    def collide_with_group(self, group, kill): #collision killing def
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp
                 self.collide_with_group(self, self.speed2, True)    
             if str(hits[0].__class__.__name__) == "Mob2":
-                self.hitpoints <= 1
+                Mob2.hitpoints < 0
     def update(self): 
         self.get_keys()
         self.x += self.vx * self.game.dt
@@ -179,6 +179,7 @@ class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
+        Mob2.hitpoints = 100
         # self.image = game.mob_img
         # self.image = pg.Surface((TILESIZE, TILESIZE))
         # self.image.fill(ORANGE)
@@ -224,8 +225,8 @@ class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
             self.rect.centery = self.pos.y
             collide_with_walls(self, self.game.walls, 'y')
             # self.rect.center = self.hit_rect.center
-            # if self.health <= 0:
-            #     self.kill() 
+            if self.hitpoints <= 0:
+                self.kill() 
 
 # class Health(Sprite):
 #     pass
