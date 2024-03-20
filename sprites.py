@@ -38,6 +38,7 @@ class Player(Sprite):
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(blue)
+        self.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILE_SIZE
@@ -82,7 +83,23 @@ class Player(Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
-
+    def collide_with_group(self, group, kill):
+        hits = pg.sprite.spritecollide(self, group, kill)
+        if hits:
+        #     if str(hits[0].__class__.__name__) == "Coin":
+        #         self.moneybag += 1
+        #     if str(hits[0].__class__.__name__) == "PowerUp":
+        #         print(hits[0].__class__.__name__)
+        #         # self.game.collect_sound.play()
+        #         effect = choice(POWER_UP_EFFECTS)
+        #         self.game.cooldown.cd = 5
+        #         self.cooling = True
+        #         print(self.cooling)
+        #         self.speed += 200
+        #         if effect == "Invincible":
+        #             self.status = "Invincible"
+            if str(hits[0].__class__.__name__) == "Mob2":
+                self.hitpoints <= 1
     def update(self):
         self.get_keys()
         self.x += self.vx * self.game.dt
@@ -91,6 +108,7 @@ class Player(Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.y
         self.collide_with_walls('y')
+        self.collide_with_group(self.game.mobs, True)
 
         # Power-up collision detection should occur within the update method
         # or within the game loop, not in the __init__ method of the PowerUp class.
@@ -184,7 +202,7 @@ class Mob2(pg.sprite.Sprite):
             # self.rect = self.image.get_rect()
             self.rect.center = self.pos
             self.acc = vec(self.speed, 0).rotate(-self.rot)
-            self.acc += self.vel * 0.5
+            self.acc += self.vel * 0.
             self.vel += self.acc * self.game.dt
             # equation of motion
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2

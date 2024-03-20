@@ -11,6 +11,17 @@ from time import sleep
 from images import *
 from os import path
 
+def draw_health_bar(surf, x, y, pct):
+    if pct < 0:
+        pct = 0
+    BAR_LENGTH = 32
+    BAR_HEIGHT = 10
+    fill = (pct / 100) * BAR_LENGTH
+    outline_rect = pg.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+    fill_rect = pg.Rect(x, y, fill, BAR_HEIGHT)
+    pg.draw.rect(surf, green, fill_rect)
+    pg.draw.rect(surf, white, outline_rect, 2) 
+
 # creating the game class
 class Game:
     def __init__(self):
@@ -69,7 +80,10 @@ class Game:
         sys.exit()
 
     def update(self):
+        if self.player.hitpoints < 1:
+            self.playing = False
         self.all_sprites.update()
+        
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):
@@ -81,6 +95,8 @@ class Game:
         self.draw_grid()
         self.all_sprites.draw(self.screen)
         pg.display.flip()
+        draw_health_bar(self.screen, self.player.rect.x, self.player.rect.y-8, self.player.hitpoints)
+        
 
     def events(self):
         for event in pg.event.get():
