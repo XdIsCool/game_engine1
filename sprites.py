@@ -38,7 +38,7 @@ class Player(Sprite):
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(blue)
-        self.speed = 200
+        self.speed = 350
         self.speed2 = 400
         Player.hitpoints = 100
         self.rect = self.image.get_rect()
@@ -93,7 +93,7 @@ class Player(Sprite):
                 Player.hitpoints < 0
             if Player.hitpoints < 0:
                 Player.kill()
-            self.speed += 400 #when player kills mob, the player speed goes up
+            self.speed += 500 #when player kills mob, the player speed goes up
     def update(self): 
         self.get_keys()
         self.x += self.vx * self.game.dt
