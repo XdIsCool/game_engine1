@@ -1,7 +1,7 @@
 #This file was created by: Abhi Bejgam
 TITLE = "Thunderstruck"
 
-FPS = 30
+FPS = 60
 
 PLAYER_SPEED = 300
 

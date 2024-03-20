@@ -89,14 +89,14 @@ class Player(Sprite):
         if hits:
         #     if str(hits[0].__class__.__name__) == "Coin":
         #         self.moneybag += 1
-        #     if str(hits[0].__class__.__name__) == "PowerUp":
+            if str(hits[0].__class__.__name__) == "PowerUp":
         #         print(hits[0].__class__.__name__)
         #         # self.game.collect_sound.play()
         #         effect = choice(POWER_UP_EFFECTS)
         #         self.game.cooldown.cd = 5
         #         self.cooling = True
         #         print(self.cooling)
-        #         self.speed += 200
+                self.speed += 200
         #         if effect == "Invincible":
         #             self.status = "Invincible"
             if str(hits[0].__class__.__name__) == "Mob2":
