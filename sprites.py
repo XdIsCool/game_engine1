@@ -117,7 +117,7 @@ class Player(Sprite):
         for power_up in power_up_hits:
             self.collect_power_up(power_up)
 
-        # Add a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
+        # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
             # Change the color of all walls
             for wall in self.game.walls:
