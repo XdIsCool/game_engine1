@@ -38,6 +38,7 @@ class Player(Sprite):
         self.game = game
         self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
         self.image.fill(blue)
+        self.speed = 150
         self.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
@@ -111,7 +112,7 @@ class Player(Sprite):
         self.collide_with_group(self.game.mobs, True)
 
         # Power-up collision detection should occur within the update method
-        # or within the game loop, not in the __init__ method of the PowerUp class.
+        # or within the game loop, not in the __init__ method of the PowerUp class
         power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,True)  
         # True to remove the sprite on collision
         for power_up in power_up_hits:
@@ -131,7 +132,7 @@ class Player(Sprite):
         
         # Change the color of all walls
             self.wall_change_timer = pg.time.get_ticks()  # Start the timer when a power-up is collected
-
+            
 # creating a wall class
 class Wall(Sprite):
     def __init__(self, game, x, y):

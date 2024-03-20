@@ -68,6 +68,10 @@ class Game:
                     PowerUp(self, col, row)
                 if tile == 'B': #B = mob tile
                     Mob2(self, col, row)
+                    if self.collide_with_group(self.game.mobs, True):
+                        if tile == 'H':
+                            Mob2(self, col, row)
+
     def run(self):
         self.playing = True
         while self.playing:
@@ -83,7 +87,7 @@ class Game:
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
-        self.collide_with_group(self.game.mobs, True)
+        # self.collide_with_group(self.game.mobs, True)
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):
