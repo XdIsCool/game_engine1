@@ -83,7 +83,7 @@ class Game:
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
-        
+        self.collide_with_group(self.game.mobs, True)
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):

@@ -112,8 +112,8 @@ class Player(Sprite):
 
         # Power-up collision detection should occur within the update method
         # or within the game loop, not in the __init__ method of the PowerUp class.
-        power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,
-                                                True)  # True to remove the sprite on collision
+        power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,True)  
+        # True to remove the sprite on collision
         for power_up in power_up_hits:
             self.collect_power_up(power_up)
 
@@ -128,6 +128,7 @@ class Player(Sprite):
     def collect_power_up(self, power_up):
         for wall in self.game.walls:
             wall.change_color(NEW_WALL_COLOR)
+        
         # Change the color of all walls
             self.wall_change_timer = pg.time.get_ticks()  # Start the timer when a power-up is collected
 
