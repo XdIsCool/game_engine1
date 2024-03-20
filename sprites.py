@@ -184,7 +184,7 @@ class Mob2(pg.sprite.Sprite):
             # self.rect = self.image.get_rect()
             self.rect.center = self.pos
             self.acc = vec(self.speed, 0).rotate(-self.rot)
-            self.acc += self.vel * 2
+            self.acc += self.vel * 0.5
             self.vel += self.acc * self.game.dt
             # equation of motion
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
