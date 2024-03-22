@@ -10,6 +10,33 @@ from os import path
 from time import sleep
 from images import *
 from os import path
+pg.init()
+
+gameDisplay = pg.display.set_mode((display_width,display_height))
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rect()
+
+def intro():
+    intro = True
+
+    while intro:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                quit()
+        gameDisplay.fill(white)
+        largeText = pg.font.Font('freesansbold.ttf', 32)
+        TextSurf, TextRect = text_objects("ASSETS LOADING...", largeText)
+        TextRect.center = ((display_width/2), (display_height/2))
+        gameDisplay.blit(TextSurf, TextRect)
+
+        # pg.draw.rect(gameDisplay, green,(150,550,150))
+
+        pg.display.update()
+        clock.tick(5)
+        
 
 def draw_health_bar(surf, x, y, pct):
     if pct < 0:
@@ -171,8 +198,8 @@ class Game:
     def show_go_screen(self):
         pass
 
-
-
+clock = pg.time.Clock()
+intro()
 g = Game()
 # g.show_start_screen()
 while True:

@@ -19,8 +19,11 @@ blue = (0,0,255)
 gold = (255,215,0)
 lightgrey= (255,255,255)
 silver = (192,192,192)
+black = (000,000,000)
 BGCOLOR= (255,215,0) 
 
 NEW_WALL_COLOR = white
 
+display_width = 800
+display_height = 600
 
