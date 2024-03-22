@@ -23,7 +23,7 @@ def draw_health_bar(surf, x, y, pct):
     pg.draw.rect(surf, white, outline_rect, 2) 
 
 class HealthBar:
-    def __init__(self, x, y, w, h, max_hp):
+    def __init__(self, x, y, w, h, max_hp,):
         self.x = x
         self.y = y
         self.w = w
@@ -39,6 +39,11 @@ class HealthBar:
     def decrease(self, amount):
         self.hp = max(self.hp - amount, 0)
         print(f"Health decreased: {self.hp}")  # Debug print
+        if self.hp <= 0:
+            pg.quit()
+    
+
+
 
 
 # creating the game class
