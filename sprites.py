@@ -260,7 +260,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.speed = 20
         self.chasing = False
         # self.health = MOB_HEALTH
-        self.hitpoints = 5
+        self.hitpoints = 6900
     def sensor(self):
         if abs(self.rect.x - self.game.player.rect.x) < self.chase_distance and abs(self.rect.y - self.game.player.rect.y) < self.chase_distance:
             self.chasing = True
@@ -282,13 +282,23 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
             # self.hit_rect.centerx = self.pos.x
             self.rect.centerx = self.pos.x
-            collide_with_walls(self, self.game.walls, 'x')
+            collide_with_walls(self, self.game.walls, 'x') #uncomment if you want wall collision
             # self.hit_rect.centery = self.pos.y
             self.rect.centery = self.pos.y
-            collide_with_walls(self, self.game.walls, 'y')
+            collide_with_walls(self, self.game.walls, 'y') #uncomment if you want wall collision
             # self.rect.center = self.hit_rect.center
-            if self.hitpoints <= 0:
-                self.kill()
+            # if self.hitpoints <= 0: #uncomment if you want this mob to be killable
+            #     self.kill()
 
-# class Health(Sprite):
-#     pass
+class Wall2(Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.walls
+        Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILE_SIZE, TILE_SIZE))
+        self.image.fill(silver)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILE_SIZE
+        self.rect.y = y * TILE_SIZE
