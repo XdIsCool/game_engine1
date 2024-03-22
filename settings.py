@@ -27,3 +27,4 @@ NEW_WALL_COLOR = white
 display_width = 800
 display_height = 600
 
+points = 0

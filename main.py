@@ -64,7 +64,7 @@ class Game:
         # Create a font object
         font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
         # Render the point counter as text
-        point_text = font.render(f"Points: {self.points}", True, pg.Color('white'))
+        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
         # Blit the text onto the screen at the specified position
         self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)    
     

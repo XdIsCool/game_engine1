@@ -113,6 +113,8 @@ class Player(Sprite):
         # True to remove the sprite on collision
         for power_up in power_up_hits:
             self.collect_power_up(power_up)
+            if self.collect_power_up(power_up):
+                self.points +=10
 
         # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
