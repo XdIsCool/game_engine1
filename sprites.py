@@ -265,7 +265,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.hitpoints = 6900
     def sensor(self):
         if abs(self.rect.x - self.game.player.rect.x) < self.chase_distance and abs(self.rect.y - self.game.player.rect.y) < self.chase_distance:
-            self.chasing = True
+            self.chasing = False
         else:
             self.chasing = False
     def update(self):
