@@ -40,7 +40,7 @@ class HealthBar:
         self.hp = max(self.hp - amount, 0)
         print(f"Health decreased: {self.hp}")  # Debug print
         if self.hp <= 0:
-            pg.quit()
+            pg.quit() #game will close if the healthbar reaches 0
     
 
 
