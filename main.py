@@ -22,6 +22,25 @@ def draw_health_bar(surf, x, y, pct):
     pg.draw.rect(surf, green, fill_rect)
     pg.draw.rect(surf, white, outline_rect, 2) 
 
+class HealthBar:
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.max_hp = max_hp
+        self.hp = max_hp  # Initialize hp with max_hp
+
+    def draw(self, surface):
+        ratio = self.hp / self.max_hp
+        pg.draw.rect(surface, (255, 0, 0), (self.x, self.y, self.w, self.h))  # Red background
+        pg.draw.rect(surface, (0, 255, 0), (self.x, self.y, int(self.w * ratio), self.h))  # Green foreground
+
+    def decrease(self, amount):
+        self.hp = max(self.hp - amount, 0)
+        print(f"Health decreased: {self.hp}")  # Debug print
+
+
 # creating the game class
 class Game:
     def __init__(self):
@@ -32,7 +51,9 @@ class Game:
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.load_data()
-    # loading the game's saving data 
+        self.player_health_bar = None
+        self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
+    # loading the game's data 
     def load_data(self):
         self.game_folder = path.dirname(__file__)
         self.img_folder = path.join(self.game_folder, 'images') 
@@ -68,9 +89,14 @@ class Game:
                     PowerUp(self, col, row)
                 if tile == 'B': #B = mob tile
                     Mob2(self, col, row)
-                if tile == 'H': #
-                    Mob3(self, col, row)
+                #if tile == 'H': #
+                #    Mob3(self, col, row)
                     
+                    # if self.collide_with_group(self.game.mobs, True):
+                    #     if tile == 'H':
+                    #         Mob2(self, col, row)
+        if hasattr(self, 'player'):
+            self.player_health_bar = HealthBar(10, 10, 100, 10, self.player.hitpoints)
     def run(self):
         self.playing = True
         while self.playing:
@@ -86,7 +112,15 @@ class Game:
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
+        # Decrease the health bar every 2 seconds
+        now = pg.time.get_ticks()
+        if now - self.last_health_decrease > 2000:  # 2000 milliseconds = 2 seconds
+            if self.player_health_bar:
+                self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
+            self.last_health_decrease = now
 
+        
+     
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):
             pg.draw.line(self.screen, lightgrey, (x, 0), (x, HEIGHT))
@@ -96,9 +130,20 @@ class Game:
         self.screen.fill(BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.screen)
-        pg.display.flip()
-        draw_health_bar(self.screen, self.player.rect.x, self.player.rect.y-8, self.player.hitpoints)
         
+        # Draw the health bar here
+        if self.player_health_bar:
+            self.player_health_bar.draw(self.screen)
+        pg.display.update()
+        #draw_health_bar(self.screen, self.player.rect.x, self.player.rect.y-8, self.player.hitpoints)
+
+    def draw_game_over(self):
+        # This function draws the "Game Over" text
+        font = pg.font.Font(None, 74)
+        text = font.render("Game Over", 1, (255, 0, 0))
+        text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        self.screen.blit(text, text_rect) 
+
 
     def events(self):
         for event in pg.event.get():
@@ -126,11 +171,13 @@ class Game:
     def show_go_screen(self):
         pass
 
+
+
 g = Game()
 # g.show_start_screen()
 while True:
     g.new()
     g.run()
-    # g.show_go_screen()
+    
     
  

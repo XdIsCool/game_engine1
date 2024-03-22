@@ -118,32 +118,35 @@ class Player(Sprite):
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
             # Changed the color of all walls
             for wall in self.game.walls:
-                wall.change_color(silver)
+                wall.change_color(silver)   
+
             self.wall_change_timer = 0  # Reset the timer
 
     # Add a new method to the Player class
     def collect_power_up(self, power_up):
         for wall in self.game.walls:
             wall.change_color(NEW_WALL_COLOR)
-        # def collide_with_walls(self, dir): #tried to add wall eating ability
-        #     if dir == 'x':
-        #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
-        #         if hits:
-        #             if self.vx > 0:
-        #                 self.x = hits[0].rect.left - self.rect.width
-        #             if self.vx < 0:
-        #                 self.x = hits[0].rect.right
-        #             self.vx = 0
-        #             self.rect.x = self.x
-        #     if dir == 'y':
-        #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
-        #         if hits:
-        #             if self.vy > 0:
-        #                 self.y = hits[0].rect.top - self.rect.height
-        #             if self.vy < 0:
-        #                 self.y = hits[0].rect.bottom
-        #             self.vy = 0
-        #             self.rect.y = self.y 
+            
+            
+    # def collide_with_walls2(self, dir): #tried to add wall eating ability
+    #     if dir == 'x':
+    #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
+    #         if hits:
+    #             if self.vx > 0:
+    #                 self.x = hits[0].rect.left - self.rect.width
+    #             if self.vx < 0:
+    #                 self.x = hits[0].rect.right
+    #             self.vx = 0
+    #             self.rect.x = self.x
+    #     if dir == 'y':
+    #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
+    #         if hits:
+    #             if self.vy > 0:
+    #                 self.y = hits[0].rect.top - self.rect.height
+    #             if self.vy < 0:
+    #                 self.y = hits[0].rect.bottom
+    #             self.vy = 0
+    #             self.rect.y = self.y 
         
         # Change the color of all walls
             self.wall_change_timer = pg.time.get_ticks()  # Start the timer when a power-up is collected
@@ -252,7 +255,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.acc = vec(0, 0)
         self.rect.center = self.pos
         self.rot = 0
-        self.chase_distance = 500
+        self.chase_distance = 2000
         # added
         self.speed = 200
         self.chasing = False
@@ -273,7 +276,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
             # self.rect = self.image.get_rect()
             self.rect.center = self.pos
             self.acc = vec(self.speed, 0).rotate(-self.rot)
-            self.acc += self.vel * 0.
+            self.acc += self.vel * 1.
             self.vel += self.acc * self.game.dt
             # equation of motion needed here (F=ma)
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
