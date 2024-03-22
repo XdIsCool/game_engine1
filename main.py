@@ -10,33 +10,6 @@ from os import path
 from time import sleep
 from images import *
 from os import path
-pg.init()
-
-gameDisplay = pg.display.set_mode((display_width,display_height))
-
-def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
-
-def intro():
-    intro = True
-
-    while intro:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
-                quit()
-        gameDisplay.fill(white)
-        largeText = pg.font.Font('freesansbold.ttf', 32)
-        TextSurf, TextRect = text_objects("ASSETS LOADING...", largeText)
-        TextRect.center = ((display_width/2), (display_height/2))
-        gameDisplay.blit(TextSurf, TextRect)
-
-        # pg.draw.rect(gameDisplay, green,(150,550,150))
-
-        pg.display.update()
-        clock.tick(5)
-        
 
 def draw_health_bar(surf, x, y, pct):
     if pct < 0:
@@ -79,7 +52,17 @@ class Game:
         pg.key.set_repeat(500, 100)
         self.load_data()
         self.player_health_bar = None
+        self.points = 0
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
+    
+    def draw_points(self):
+        # Create a font object
+        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
+        # Render the point counter as text
+        point_text = font.render(f"Points: {self.points}", True, pg.Color('white'))
+        # Blit the text onto the screen at the specified position
+        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)    
+    
     # loading the game's data 
     def load_data(self):
         self.game_folder = path.dirname(__file__)
@@ -123,7 +106,7 @@ class Game:
                     #     if tile == 'H':
                     #         Mob2(self, col, row)
         if hasattr(self, 'player'):
-            self.player_health_bar = HealthBar(10, 10, 100, 10, self.player.hitpoints)
+            self.player_health_bar = HealthBar(10, 10, 100, 40, self.player.hitpoints)
     def run(self):
         self.playing = True
         while self.playing:
@@ -144,6 +127,7 @@ class Game:
         if now - self.last_health_decrease > 2000:  # 2000 milliseconds = 2 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
+                self.points += 10 
             self.last_health_decrease = now
 
         
@@ -161,6 +145,7 @@ class Game:
         # Draw the health bar here
         if self.player_health_bar:
             self.player_health_bar.draw(self.screen)
+        self.draw_points()
         pg.display.update()
         #draw_health_bar(self.screen, self.player.rect.x, self.player.rect.y-8, self.player.hitpoints)
 
@@ -198,8 +183,8 @@ class Game:
     def show_go_screen(self):
         pass
 
-clock = pg.time.Clock()
-intro()
+
+
 g = Game()
 # g.show_start_screen()
 while True:
