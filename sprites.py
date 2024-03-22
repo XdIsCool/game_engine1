@@ -241,7 +241,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        Mob2.hitpoints = 100
+        Mob2.hitpoints = 1800
         # self.image = game.mob_img
         # self.image = pg.Surface((TILESIZE, TILESIZE))
         # self.image.fill(ORANGE)
@@ -257,7 +257,7 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.rot = 0
         self.chase_distance = 2000
         # added
-        self.speed = 200
+        self.speed = 20
         self.chasing = False
         # self.health = MOB_HEALTH
         self.hitpoints = 5
@@ -267,8 +267,8 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         else:
             self.chasing = False
     def update(self):
-        if self.hitpoints < 1:
-            self.kill()
+        # if self.hitpoints < 1:
+        #     self.kill()
         self.sensor()
         if self.chasing:
             self.rot = (self.game.player.rect.center - self.pos).angle_to(vec(1, 0))

@@ -104,8 +104,8 @@ class Game:
                     PowerUp(self, col, row)
                 if tile == 'B': #B = mob tile
                     Mob2(self, col, row)
-                #if tile == 'H': #
-                #    Mob3(self, col, row)
+                if tile == 'H': #
+                   Mob3(self, col, row)
                     
                     # if self.collide_with_group(self.game.mobs, True):
                     #     if tile == 'H':
