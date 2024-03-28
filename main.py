@@ -129,7 +129,7 @@ class Game:
         self.all_sprites.update()
         # Decrease the health bar every 2 seconds
         now = pg.time.get_ticks()
-        if now - self.last_health_decrease > 2000:  # 2000 milliseconds = 2 seconds
+        if now - self.last_health_decrease > 1500:  # 2000 milliseconds = 2 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
                 self.points += 10 
