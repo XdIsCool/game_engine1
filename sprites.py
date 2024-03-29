@@ -40,6 +40,7 @@ class Player(Sprite):
         self.image.fill(blue)
         self.speed = 350
         self.speed2 = 400
+        self.points = 0
         Player.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
@@ -91,8 +92,8 @@ class Player(Sprite):
             # if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp   
             if str(hits[0].__class__.__name__) == "Mob2":
                 Player.hitpoints < 0
-            if Player.hitpoints < 0:
-                Player.kill()
+            if str(hits[0].__class__.__name__) == "PowerUp":
+                self.points += 10
             self.speed += 500 #when player kills mob, the player speed goes up
     def update(self): 
         self.get_keys()

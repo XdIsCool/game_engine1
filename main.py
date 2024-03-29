@@ -132,8 +132,9 @@ class Game:
         if now - self.last_health_decrease > 1500:  # 2000 milliseconds = 2 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
-                self.points += 10 
+                self.points += 1 
             self.last_health_decrease = now
+            
 
         
      
