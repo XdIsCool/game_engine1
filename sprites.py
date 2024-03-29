@@ -89,7 +89,6 @@ class Player(Sprite):
     def collide_with_group(self, group, kill): #collision killing def
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
-            # if str(hits[0].__class__.__name__) == "PowerUp":# tried to add speed to PowerUp   
             if str(hits[0].__class__.__name__) == "Mob2":
                 Player.hitpoints < 0
             if str(hits[0].__class__.__name__) == "PowerUp":
@@ -104,10 +103,6 @@ class Player(Sprite):
         self.rect.y = self.y
         self.collide_with_walls('y')
         self.collide_with_group(self.game.mobs, True)
-        if Player.hitpoints < 0:
-                Player.kill()
-        
-
         # Power-up collision detection should occur within the update method
         # or within the game loop, not in the __init__ method of the PowerUp class
         power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,True)  
@@ -116,15 +111,12 @@ class Player(Sprite):
             self.collect_power_up(power_up)
             if self.collect_power_up(power_up):
                 self.points +=10
-
         # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
             # Changed the color of all walls
             for wall in self.game.walls:
                 wall.change_color(silver)   
-
             self.wall_change_timer = 0  # Reset the timer
-
     # Add a new method to the Player class
     def collect_power_up(self, power_up):
         for wall in self.game.walls:
