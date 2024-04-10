@@ -1,3 +1,5 @@
+#This file was created by: Abhi Bejgam
+
 #loop through a list
 import pygame as pg
 
@@ -42,3 +44,5 @@ while True:
     # print(current_frame)
     if pg.time == 10000:
         pg.quit()
+
+
