@@ -90,7 +90,7 @@ class Player(Sprite):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Mob2":
-                Player.hitpoints < 0
+                self.hitpoints == 0
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
             self.speed += 500 #when player kills mob, the player speed goes up
@@ -109,8 +109,7 @@ class Player(Sprite):
         # True to remove the sprite on collision
         for power_up in power_up_hits:
             self.collect_power_up(power_up)
-            if self.collect_power_up(power_up):
-                self.points +=10
+            self.points += 10
         # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
             # Changed the color of all walls
