@@ -6,8 +6,26 @@ from pygame.sprite import Sprite
 from random import choice
 from random import randint
 from images import *
-
+from os import path
 vec = pg.math.Vector2
+
+SPRITESHEET = "theBell.png"
+game_folder = path.dirname(__file__)
+img_folder = path.join(game_folder, 'images')
+
+class Spritesheet:
+    # utility class for loading and parsing spritesheets
+    def __init__(self, filename):
+        self.spritesheet = pg.image.load(filename).convert()
+
+    def get_image(self, x, y, width, height):
+        # grab an image out of a larger spritesheet
+        image = pg.Surface((width, height))
+        image.blit(self.spritesheet, (0, 0), (x, y, width, height))
+        # image = pg.transform.scale(image, (width, height))
+        image = pg.transform.scale(image, (width * 1.8, height * 1.8))
+        return image
+    
 
 def collide_with_walls(sprite, group, dir): #defining collide_with_walls so Mob2 can use it
     if dir == 'x':
@@ -41,13 +59,45 @@ class Player(Sprite):
         self.speed = 350
         self.speed2 = 400
         self.points = 0
-        Player.hitpoints = 100
+        self.hitpoints = 100
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILE_SIZE
         self.y = y * TILE_SIZE
         self.wall_change_timer = 0  # Add this line
+        #uncomment below if you want sprite animation
+        self.spritesheet = Spritesheet(path.join(img_folder, SPRITESHEET))
+        self.load_images()
+        self.image = self.standing_frames[0]
+        self.rect = self.image.get_rect()
+        self.current_frame = 0
+        self.last_update = 0
+        self.material = True
+        self.jumping = False
+        self.walking = False
 
+    def load_images(self):
+        self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32), 
+                                self.spritesheet.get_image(32, 0, 32, 32),
+                                ]
+
+    def animate(self):
+        now = pg.time.get_ticks()
+        if now - self.last_update > 350:
+            self.last_update = now
+            self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
+            bottom = self.rect.bottom
+            self.image = self.standing_frames[self.current_frame]
+            self.rect = self.image.get_rect()
+            self.rect.bottom = bottom
+
+    # def update(self):
+    #     # needed for animated sprite
+    #     self.animate()
+    #     self.get_keys()
+    #     self.x += self.vx * self.game.dt
+    #     self.y += self.vy * self.game.dt
+    #     self.rect.x = self.x
         # def move(self, dx=0, dy=0):
         #     self.x += dx
         #     self.y += dy
@@ -90,12 +140,19 @@ class Player(Sprite):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Mob2":
-                self.hitpoints == 0
+                self.hitpoints -= 99.9
+                print("OUCH!")
+            if str(hits[0].__class__.__name__) == "Wall":
+                self.hitpoints -= 100
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
-            self.speed += 500 #when player kills mob, the player speed goes up
+            self.speed += 10 #when player kills mob, the player speed goes up
     def update(self): 
         self.get_keys()
+        self.animate()
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+        self.rect.x = self.x
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
         self.rect.x = self.x
@@ -296,3 +353,5 @@ class Wall2(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+
+

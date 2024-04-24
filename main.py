@@ -1,6 +1,10 @@
 # This file was created by: Abhi Bejgam
 # my first source control edit
 # importing necessary modules
+# BETA GOALS:
+#   *Animate the player sprite (DONE)
+#   *Add levels with varying maps and mobs
+
 import pygame as pg
 import sys
 from settings import *
@@ -38,7 +42,7 @@ class HealthBar:
 
     def decrease(self, amount):
         self.hp = max(self.hp - amount, 0)
-        print(f"Health decreased: {self.hp}")  # Debug print
+        print(f"Time decreased: {self.hp}")  # Debug print
         if self.hp <= 0:
             pg.quit() #game will close if the healthbar reaches 0
     
@@ -129,7 +133,7 @@ class Game:
         self.all_sprites.update()
         # Decrease the health bar every 2 seconds
         now = pg.time.get_ticks()
-        if now - self.last_health_decrease > 1500:  # 2000 milliseconds = 2 seconds
+        if now - self.last_health_decrease > 1500:  # 1500 milliseconds = 1.5 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
                 self.points += 1 

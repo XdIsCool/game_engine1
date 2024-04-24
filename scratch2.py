@@ -22,7 +22,9 @@ tick = 0
 clock = pg.time.Clock()
 
 while True:
-    tock = pg.time.get_ticks()
-    clock.tick(tag)
-    if tock - tick > 0.1:
-        print(tock)
+    print("OHHHH MAH GAWD")
+    tick += 10
+    if tick > 1:
+        break
+
+
