@@ -1,9 +1,11 @@
 # This file was created by: Abhi Bejgam
 # my first source control edit
 # importing necessary modules
+
 # BETA GOALS:
 #   *Animate the player sprite (DONE)
 #   *Add levels with varying maps and mobs
+#   *Add shield/deflection feature and make player's points increase/decrease based off of that
 
 import pygame as pg
 import sys
@@ -136,7 +138,6 @@ class Game:
         if now - self.last_health_decrease > 1500:  # 1500 milliseconds = 1.5 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
-                self.points += 1 
             self.last_health_decrease = now
             
 
