@@ -59,7 +59,7 @@ class Player(Sprite):
         self.speed = 200
         self.speed2 = 400
         self.points = 0
-        self.hitpoints = 100
+        self.hitpoints = 150
         self.rect = self.image.get_rect()
         self.vx, self.vy = 0, 0
         self.x = x * TILE_SIZE
@@ -148,6 +148,19 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
             self.speed += 10 #when player kills mob, the player speed goes up
+
+    def draw_points(self):
+        # Create a font object
+        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
+        # Render the point counter as text
+        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        # Blit the text onto the screen at the specified position
+        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
+
+    def update_points(self, number):
+        self.points += 10
+        print("points"+= "10")
+
     def update(self): 
         self.get_keys()
         self.animate()
@@ -161,27 +174,32 @@ class Player(Sprite):
         self.rect.y = self.y
         self.collide_with_walls('y')
         self.collide_with_group(self.game.mobs, True)
+        if self.collide_with_group(self.game.mobs, True):
+            self.update_points()
+
+
         # Power-up collision detection should occur within the update method
         # or within the game loop, not in the __init__ method of the PowerUp class
         power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,True)  
         # True to remove the sprite on collision
-        for power_up in power_up_hits: #tried my hardest to add powerup increasing points feature, but unsure how to put it into update
-            self.collect_power_up(power_up)
-            self.points += 10
+        for PowerUp in power_up_hits: #tried my hardest to add powerup increasing points feature, but unsure how to put it into update
+            self.collect_power_up(PowerUp)
         # Added a check to see if the timer has elapsed 5 seconds (5000 milliseconds)
         if self.wall_change_timer and pg.time.get_ticks() - self.wall_change_timer > 5000:
             # Changed the color of all walls
             for wall in self.game.walls:
                 wall.change_color(silver)   
             self.wall_change_timer = 0  # Reset the timer
-    # Add a new method to the Player class
-        if self.collide_with_group(self.game.mobs, True):
-            self.speed += 40
+    # Added a new method to the Player class
+        # if self.collide_with_group(self.game.mobs, True):
+        #     self.speed += 40
+        #     self.points -= 10
         
 
     def collect_power_up(self, power_up):
         for wall in self.game.walls:
             wall.change_color(NEW_WALL_COLOR)
+            # self.points += 10
             
             
     # def collide_with_walls2(self, dir): #tried to add wall eating ability
@@ -234,7 +252,6 @@ class PowerUp(pg.sprite.Sprite): #added PowerUp class
         self.image.fill(green)  
         self.rect = self.image.get_rect()
         self.x = x
-        self.points = 0
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
@@ -245,7 +262,7 @@ class Mob2(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        Mob2.hitpoints = 100
+        self.hitpoints = 100
         # self.image = game.mob_img
         # self.image = pg.Surface((TILESIZE, TILESIZE))
         # self.image.fill(ORANGE)

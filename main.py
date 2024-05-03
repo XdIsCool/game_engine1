@@ -62,8 +62,8 @@ class Game:
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
         self.load_data()
-        self.player_health_bar = None
         self.points = 0
+        self.player_health_bar = None
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
     
     def draw_points(self):
@@ -139,8 +139,6 @@ class Game:
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
             self.last_health_decrease = now
-            
-
         
      
     def draw_grid(self):
