@@ -13,6 +13,7 @@ SPRITESHEET = "theBell.png"
 game_folder = path.dirname(__file__)
 img_folder = path.join(game_folder, 'images')
 
+
 class Spritesheet:
     # utility class for loading and parsing spritesheets
     def __init__(self, filename):
@@ -25,6 +26,7 @@ class Spritesheet:
         # image = pg.transform.scale(image, (width, height))
         image = pg.transform.scale(image, (width * 1.8, height * 1.8))
         return image
+    
     
 
 def collide_with_walls(sprite, group, dir): #defining collide_with_walls so Mob2 can use it
@@ -81,6 +83,10 @@ class Player(Sprite):
         self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32), 
                                 self.spritesheet.get_image(32, 0, 32, 32),
                                 ]
+    def display_points(screen, points):
+        font = pg.font.Font(None, 36)
+        point_text = font.render(f"Points: {points}", True, pg.Color('black'))
+        screen.blit(point_text, (10, 10))
 
     def animate(self):
         now = pg.time.get_ticks()
@@ -148,7 +154,7 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
             self.speed += 10 #when player kills mob, the player speed goes up
-
+            
     def draw_points(self):
         # Create a font object
         font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
@@ -157,9 +163,9 @@ class Player(Sprite):
         # Blit the text onto the screen at the specified position
         self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
 
-    def update_points(self, number):
-        self.points += 10
-        print("points"+= "10")
+    # def update_points(self, number):
+    #     self.points += 10
+    #     print("points"+= "10")
 
     def update(self): 
         self.get_keys()
@@ -176,6 +182,7 @@ class Player(Sprite):
         self.collide_with_group(self.game.mobs, True)
         if self.collide_with_group(self.game.mobs, True):
             self.update_points()
+        # display_points(self.game.screen, self.points)
 
 
         # Power-up collision detection should occur within the update method
@@ -238,6 +245,7 @@ class Wall(Sprite):
         self.y = y
         self.rect.x = x * TILE_SIZE
         self.rect.y = y * TILE_SIZE
+        self.hitpoints = 100
 
     def change_color(self, new_color):
         self.image.fill(new_color)  # Filling the wall's surface with the new color

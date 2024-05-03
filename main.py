@@ -118,6 +118,7 @@ class Game:
                     #         Mob2(self, col, row)
         if hasattr(self, 'player'):
             self.player_health_bar = HealthBar(10, 10, 100, 40, self.player.hitpoints)
+
     def run(self):
         self.playing = True
         while self.playing:
@@ -125,6 +126,10 @@ class Game:
             self.events()
             self.update()
             self.draw()
+
+    def reset_points(self):
+        self.points = 0
+    
     def quit(self):
         pg.quit()
         sys.exit()
@@ -139,6 +144,10 @@ class Game:
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
             self.last_health_decrease = now
+            self.points += 1
+        if self.player.hitpoints <= 0:
+            self.reset_points() #when the player dies, the points and level reset
+        
         
      
     def draw_grid(self):
