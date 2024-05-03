@@ -158,8 +158,7 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.draw_grid()
-        self.all_sprites.draw(self.screen)
-        
+        self.all_sprites.draw(self.screen)        
         # Draw the health bar here
         if self.player_health_bar:
             self.player_health_bar.draw(self.screen)
