@@ -163,18 +163,9 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
             self.speed += 10 #when player kills mob, the player speed goes up
-            
-    def draw_points(self):
-        # Create a font object
-        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
-        # Render the point counter as text
-        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
-        # Blit the text onto the screen at the specified position
-        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
 
     def update_points(self, number):
         self.points += 10
-        prin+= "10"
 
     def update(self): 
         self.get_keys()
