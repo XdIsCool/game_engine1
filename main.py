@@ -62,7 +62,7 @@ class Game:
         self.player_health_bar = None
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
     
-    def draw_points(self):
+    def draw_points(self): #mom helped with this part
         # Create a font object
         font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
         # Render the point counter as text
@@ -84,6 +84,9 @@ class Game:
                 self.map_data.append(line)
                 print(self.map_data)
                 #print(enumerate(self.map_data))
+
+    def mob_collide_points(self, points):
+        self.points -= 5
 
     def new(self):
         # initializing all variables and setup groups, and instantiating classes
@@ -129,8 +132,10 @@ class Game:
     def quit(self):
         pg.quit()
         sys.exit()
+    def mobs(self):
+        self.mobs()
 
-    def update(self):
+    def update(self, mobs):
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
@@ -203,6 +208,3 @@ g = Game()
 while True:
     g.new()
     g.run()
-    
-    
- 
