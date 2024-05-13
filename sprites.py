@@ -13,15 +13,6 @@ SPRITESHEET = "theBell.png"
 game_folder = path.dirname(__file__)
 img_folder = path.join(game_folder, 'images')
 
-def draw_points(self):
-        # Create a font object
-        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
-        # Render the point counter as text
-        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
-        # Blit the text onto the screen at the specified position
-        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)
-
-
 class Spritesheet:
     # utility class for loading and parsing spritesheets
     def __init__(self, filename):
@@ -91,10 +82,6 @@ class Player(Sprite):
         self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32), 
                                 self.spritesheet.get_image(32, 0, 32, 32),
                                 ]
-    def display_points(screen, points):
-        font = pg.font.Font(None, 36)
-        point_text = font.render(f"Points: {points}", True, pg.Color('black'))
-        screen.blit(point_text, (10, 10))
 
     def animate(self):
         now = pg.time.get_ticks()

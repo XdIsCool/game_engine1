@@ -48,10 +48,6 @@ class HealthBar:
         if self.hp <= 0:
             pg.quit() #game will close if the healthbar reaches 0
     
-
-
-
-
 # creating the game class
 class Game:
     def __init__(self):
@@ -66,13 +62,13 @@ class Game:
         self.player_health_bar = None
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
     
-    # def draw_points(self):
-    #     # Create a font object
-    #     font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
-    #     # Render the point counter as text
-    #     point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
-    #     # Blit the text onto the screen at the specified position
-    #     self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)    
+    def draw_points(self):
+        # Create a font object
+        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
+        # Render the point counter as text
+        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        # Blit the text onto the screen at the specified position
+        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)    
     
     # loading the game's data 
     def load_data(self):
@@ -162,7 +158,7 @@ class Game:
         # Draw the health bar here
         if self.player_health_bar:
             self.player_health_bar.draw(self.screen)
-            draw_points(self)
+            self.draw_points()
         pg.display.update()
         #draw_health_bar(self.screen, self.player.rect.x, self.player.rect.y-8, self.player.hitpoints)
 
