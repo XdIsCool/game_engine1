@@ -138,21 +138,23 @@ class Player(Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
+                
     def collide_with_group(self, group, kill): #collision killing def
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Mob2":
                 self.hitpoints -= 99.9
                 print("OUCH!")
-                self.points //= 2
+                self.update_mob_points()
             if str(hits[0].__class__.__name__) == "Wall":
                 self.hitpoints -= 100
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
             self.speed += 10 #when player kills mob, the player speed goes up
 
-    def update_points(self, number):
-        self.points += 10
+    # def update_mob_points(self):
+    #         self.points -= 5
+    #         print("I collided with mob -5 points!")
 
     def update(self): 
         self.get_keys()
@@ -167,8 +169,8 @@ class Player(Sprite):
         self.rect.y = self.y
         self.collide_with_walls('y')
         self.collide_with_group(self.game.mobs, True)
-        if self.collide_with_group(self.game.mobs, True):
-            self.update_points()
+        # if self.collide_with_group(self.game.mobs, True):
+        #     self.update_mob_points()
         # display_points(self.game.screen, self.points)
 
         # Power-up collision detection should occur within the update method or within the game loop, not in the __init__ method of the PowerUp class

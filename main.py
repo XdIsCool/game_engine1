@@ -76,7 +76,8 @@ class Game:
         if self.points > 0:
         # Render the point counter as text
             point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
-            point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        if self.mob_collide_points():
+            point_text = font.render(f"Points: {self.points + 5}", True, pg.Color('black'))
 
     
     # loading the game's data 
@@ -95,7 +96,8 @@ class Game:
                 #print(enumerate(self.map_data))
 
     def mob_collide_points(self):
-        self.points -= 5
+            self.points += 5
+            print("+5 points for you >:)")
 
     def new(self):
         # initializing all variables and setup groups, and instantiating classes
@@ -156,12 +158,7 @@ class Game:
             self.last_health_decrease = now            
         if self.player.hitpoints <= 0:
             self.reset_points() #when the player dies, the points and level reset
-        mob_hits = pg.sprite.spritecollide(self.player, self.mobs, True)
-        if mob_hits:
-            self.points -= 5
-            print("I collided with mob -5 points!")
 
-        
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):
