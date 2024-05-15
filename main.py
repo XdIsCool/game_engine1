@@ -47,6 +47,7 @@ class HealthBar:
         print(f"Time decreased: {self.hp}")  # Debug print
         if self.hp <= 0:
             pg.quit() #game will close if the healthbar reaches 0
+        
     
 # creating the game class
 class Game:
@@ -68,7 +69,15 @@ class Game:
         # Render the point counter as text
         point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
         # Blit the text onto the screen at the specified position
-        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)    
+        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
+        if self.points < 0:
+        # Render the point counter as text with negative sign
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('red'))
+        if self.points > 0:
+        # Render the point counter as text
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+
     
     # loading the game's data 
     def load_data(self):
@@ -85,7 +94,7 @@ class Game:
                 print(self.map_data)
                 #print(enumerate(self.map_data))
 
-    def mob_collide_points(self, points):
+    def mob_collide_points(self):
         self.points -= 5
 
     def new(self):
@@ -135,7 +144,7 @@ class Game:
     def mobs(self):
         self.mobs()
 
-    def update(self, mobs):
+    def update(self):
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
@@ -144,13 +153,16 @@ class Game:
         if now - self.last_health_decrease > 1500:  # 1500 milliseconds = 1.5 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
-            self.last_health_decrease = now
-            self.points += 1
+            self.last_health_decrease = now            
         if self.player.hitpoints <= 0:
             self.reset_points() #when the player dies, the points and level reset
+        mob_hits = pg.sprite.spritecollide(self.player, self.mobs, True)
+        if mob_hits:
+            self.points -= 5
+            print("I collided with mob -5 points!")
+
         
-        
-     
+
     def draw_grid(self):
         for x in range(0, WIDTH, TILE_SIZE):
             pg.draw.line(self.screen, lightgrey, (x, 0), (x, HEIGHT))

@@ -171,9 +171,7 @@ class Player(Sprite):
             self.update_points()
         # display_points(self.game.screen, self.points)
 
-
-        # Power-up collision detection should occur within the update method
-        # or within the game loop, not in the __init__ method of the PowerUp class
+        # Power-up collision detection should occur within the update method or within the game loop, not in the __init__ method of the PowerUp class
         power_up_hits = pg.sprite.spritecollide(self, self.game.power_ups,True)  
         # True to remove the sprite on collision
         for PowerUp in power_up_hits: #tried my hardest to add powerup increasing points feature, but unsure how to put it into update
@@ -311,7 +309,6 @@ class Mob3(pg.sprite.Sprite): #Mr. Cozort made class edited by Abhi Bejgam
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        Mob2.hitpoints = 1800
         # self.image = game.mob_img
         # self.image = pg.Surface((TILESIZE, TILESIZE))
         # self.image.fill(ORANGE)
