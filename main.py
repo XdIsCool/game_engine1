@@ -67,17 +67,17 @@ class Game:
         # Create a font object
         font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
         # Render the point counter as text
-        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        point_text = font.render(f"Points: {self.player.points}", True, pg.Color('black'))
         # Blit the text onto the screen at the specified position
         self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
         if self.points < 0:
         # Render the point counter as text with negative sign
-            point_text = font.render(f"Points: {self.points}", True, pg.Color('red'))
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('green'))
         if self.points > 0:
         # Render the point counter as text
             point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
-        if self.mob_collide_points():
-            point_text = font.render(f"Points: {self.points + 5}", True, pg.Color('black'))
+        # if self.mob_collide_points():
+        #     point_text = font.render(f"Points: {self.points + 5}", True, pg.Color('black'))
 
     
     # loading the game's data 
@@ -95,9 +95,9 @@ class Game:
                 print(self.map_data)
                 #print(enumerate(self.map_data))
 
-    def mob_collide_points(self):
-            self.points += 5
-            print("+5 points for you >:)")
+    # def mob_collide_points(self):
+    #         self.points += 5
+    #         print("+5 points for you >:)")
 
     def new(self):
         # initializing all variables and setup groups, and instantiating classes
@@ -151,7 +151,7 @@ class Game:
             self.playing = False
         self.all_sprites.update()
         # Decrease the health bar every 2 seconds
-        now = pg.time.get_ticks()
+        now = pg.time.get_ticks()  
         if now - self.last_health_decrease > 1500:  # 1500 milliseconds = 1.5 seconds
             if self.player_health_bar:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount

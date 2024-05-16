@@ -77,11 +77,30 @@ class Player(Sprite):
         self.jumping = False
         self.walking = False
         
+    def draw_points(self): #mom helped with this part
+        # Create a font object
+        font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
+        # Render the point counter as text
+        point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        # Blit the text onto the screen at the specified position
+        self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
+        if self.points < 0:
+        # Render the point counter as text with negative sign
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('red'))
+        if self.points > 0:
+        # Render the point counter as text
+            point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+        # if self.mob_collide_points():
+        #     point_text = font.render(f"Points: {self.points + 5}", True, pg.Color('black'))
+        
 
     def load_images(self):
         self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32), 
                                 self.spritesheet.get_image(32, 0, 32, 32),
                                 ]
+    def update_mob_points(self):
+        self.points -= 1
+        print("mob_points")
 
     def animate(self):
         now = pg.time.get_ticks()
@@ -168,7 +187,9 @@ class Player(Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.y
         self.collide_with_walls('y')
-        self.collide_with_group(self.game.mobs, True)
+        if self.collide_with_group(self.game.mobs, True):
+            self.update_mob_points()
+        
         # if self.collide_with_group(self.game.mobs, True):
         #     self.update_mob_points()
         # display_points(self.game.screen, self.points)
