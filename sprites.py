@@ -169,7 +169,13 @@ class Player(Sprite):
                 self.hitpoints -= 100
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
+            if str(hits[0].__class__.__name__) == "Mob3":
+                self.points -= 0.5
             self.speed += 10 #when player kills mob, the player speed goes up
+        
+    # def mob3_collide(self):
+    #     self.points -= 0.5
+
 
     # def update_mob_points(self):
     #         self.points -= 5
@@ -189,6 +195,7 @@ class Player(Sprite):
         self.collide_with_walls('y')
         if self.collide_with_group(self.game.mobs, True):
             self.update_mob_points()
+
         
         # if self.collide_with_group(self.game.mobs, True):
         #     self.update_mob_points()
