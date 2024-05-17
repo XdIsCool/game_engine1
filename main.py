@@ -5,6 +5,7 @@
 # BETA GOALS:
 #   *Animate the player sprite (DONE)
 #   *Add levels with varying maps and mobs
+#   *Add points with collision feature (DONE)
 #   *Add shield/deflection feature and make player's points increase/decrease based off of that
 
 import pygame as pg
@@ -17,7 +18,30 @@ from time import sleep
 from images import *
 from os import path
 
+def draw_health_bar(surf, x, y, pct):
+    if pct < 0:
+        pct = 0
+    BAR_LENGTH = 32
+    BAR_HEIGHT = 10
+    fill = (pct / 100) * BAR_LENGTH
+    outline_rect = pg.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+    fill_rect = pg.Rect(x, y, fill, BAR_HEIGHT)
+    pg.draw.rect(surf, green, fill_rect)
+    pg.draw.rect(surf, white, outline_rect, 2) 
 
+class HealthBar:
+    def __init__(self, x, y, w, h, max_hp,):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.max_hp = max_hp
+        self.hp = max_hp  # Initialize hp with max_hp
+
+    def draw(self, surface):
+        ratio = self.hp / self.max_hp
+        pg.draw.rect(surface, (255, 0, 0), (self.x, self.y, self.w, self.h))  # Red background
+        pg.draw.rect(surface, (0, 255, 0), (self.x, self.y, int(self.w * ratio), self.h))  # Green foreground
 
     def decrease(self, amount):
         self.hp = max(self.hp - amount, 0)
