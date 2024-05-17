@@ -164,6 +164,7 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "Mob2":
                 self.hitpoints -= 99.9
                 print("OUCH!")
+                self.speed += 100
                 self.update_mob_points()
             if str(hits[0].__class__.__name__) == "Wall":
                 self.hitpoints -= 100
@@ -171,7 +172,7 @@ class Player(Sprite):
                 self.points += 10
             if str(hits[0].__class__.__name__) == "Mob3":
                 self.points -= 0.5
-            self.speed += 10 #when player kills mob, the player speed goes up
+                self.speed += 50 #when player kills mob3, the player speed goes up
         
     # def mob3_collide(self):
     #     self.points -= 0.5
@@ -195,6 +196,9 @@ class Player(Sprite):
         self.collide_with_walls('y')
         if self.collide_with_group(self.game.mobs, True):
             self.update_mob_points()
+        if self.speed >= 500:
+            self.kill()
+            pg.quit()
 
         
         # if self.collide_with_group(self.game.mobs, True):
