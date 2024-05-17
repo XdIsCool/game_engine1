@@ -17,30 +17,7 @@ from time import sleep
 from images import *
 from os import path
 
-def draw_health_bar(surf, x, y, pct):
-    if pct < 0:
-        pct = 0
-    BAR_LENGTH = 32
-    BAR_HEIGHT = 10
-    fill = (pct / 100) * BAR_LENGTH
-    outline_rect = pg.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-    fill_rect = pg.Rect(x, y, fill, BAR_HEIGHT)
-    pg.draw.rect(surf, green, fill_rect)
-    pg.draw.rect(surf, white, outline_rect, 2) 
 
-class HealthBar:
-    def __init__(self, x, y, w, h, max_hp,):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
-        self.max_hp = max_hp
-        self.hp = max_hp  # Initialize hp with max_hp
-
-    def draw(self, surface):
-        ratio = self.hp / self.max_hp
-        pg.draw.rect(surface, (255, 0, 0), (self.x, self.y, self.w, self.h))  # Red background
-        pg.draw.rect(surface, (0, 255, 0), (self.x, self.y, int(self.w * ratio), self.h))  # Green foreground
 
     def decrease(self, amount):
         self.hp = max(self.hp - amount, 0)
@@ -72,10 +49,10 @@ class Game:
         self.screen.blit(point_text, (10, 10))  # Top-left corner (10, 10)  
         if self.points < 0:
         # Render the point counter as text with negative sign
-            point_text = font.render(f"Points: {self.points}", True, pg.Color('green'))
+            point_text = font.render(f"Points: {self.player.points}", True, pg.Color('green'))
         if self.points > 0:
         # Render the point counter as text
-            point_text = font.render(f"Points: {self.points}", True, pg.Color('black'))
+            point_text = font.render(f"Points: {self.player.points}", True, pg.Color('black'))
         # if self.mob_collide_points():
         #     point_text = font.render(f"Points: {self.points + 5}", True, pg.Color('black'))
 
