@@ -29,7 +29,7 @@ def draw_health_bar(surf, x, y, pct):
     pg.draw.rect(surf, green, fill_rect)
     pg.draw.rect(surf, white, outline_rect, 2) 
 
-class HealthBar:
+class HealthBar: #creating a "healthbar", when it's actually a timer
     def __init__(self, x, y, w, h, max_hp,):
         self.x = x
         self.y = y
@@ -65,6 +65,7 @@ class Game:
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
     
     def draw_points(self): #mom helped with this part
+        # Creating text to display points on
         # Create a font object
         font = pg.font.Font(None, 36)  # None means default font, 36 is the font size
         # Render the point counter as text
@@ -148,6 +149,7 @@ class Game:
         self.mobs()
 
     def update(self):
+        # updates all the features in the game
         if self.player.hitpoints < 1:
             self.playing = False
         self.all_sprites.update()
