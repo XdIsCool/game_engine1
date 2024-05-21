@@ -201,7 +201,7 @@ class Player(Sprite):
             self.kill()
             pg.quit()
         if self.speed <= 100:
-            print("YOU WIN! (BELIEVE IT OR NOT)")
+            print("L")
             pg.quit()
 
         
