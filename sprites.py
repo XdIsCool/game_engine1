@@ -170,6 +170,7 @@ class Player(Sprite):
                 self.hitpoints -= 100
             if str(hits[0].__class__.__name__) == "PowerUp":
                 self.points += 10
+                self.speed -= 100
             if str(hits[0].__class__.__name__) == "Mob3":
                 self.points -= 0.5
                 self.speed += 50 #when player kills mob3, the player speed goes up
