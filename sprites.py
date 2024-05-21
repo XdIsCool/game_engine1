@@ -197,7 +197,7 @@ class Player(Sprite):
         self.collide_with_walls('y')
         if self.collide_with_group(self.game.mobs, True):
             self.update_mob_points()
-        if self.speed >= 300:
+        if self.speed >= 400:
             self.kill()
             pg.quit()
         if self.speed <= 100:
