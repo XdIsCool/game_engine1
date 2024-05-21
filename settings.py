@@ -7,9 +7,9 @@ PLAYER_SPEED = 300
 
 
 #32 grids wide
-WIDTH = 1024
+WIDTH = 1600
 #24 grids high
-HEIGHT = 768
+HEIGHT = 724
 TILE_SIZE = 32
 
 green = (0,255,0)
