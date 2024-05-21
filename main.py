@@ -48,6 +48,7 @@ class HealthBar: #creating a "healthbar", when it's actually a timer
         print(f"Time decreased: {self.hp}")  # Debug print
         if self.hp <= 0:
             pg.quit() #game will close if the healthbar reaches 0
+            print("You Win! (Believe it or not)")
         
     
 # creating the game class
