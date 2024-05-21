@@ -63,6 +63,32 @@ class Game:
         self.points = 0
         self.player_health_bar = None
         self.last_health_decrease = pg.time.get_ticks()  # Initializing the timer
+
+    def check_win(self): #ChatGPT generated
+        # Check if the player has won the game
+        return self.points >= 100  # Assuming the win condition is reaching 100 points
+
+    def show_win_screen(self): #ChatGPT generated
+        # Display the win screen
+        self.screen.fill((0, 255, 0))  # Fill the screen with green color (you can customize)
+        font = pg.font.SysFont(None, 60)
+        text = font.render("Congratulations! You Win!", True, (255, 255, 255))  # White text
+        text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        self.screen.blit(text, text_rect)
+        pg.display.flip()
+
+    def run(self): #ChatGPT generated
+        self.playing = True
+        while self.playing:
+            self.dt = self.clock.tick(FPS) / 1000
+            self.events()
+            self.update()
+            self.draw()
+            if self.check_win_condition():
+                self.show_win_screen()
+                sleep(3)  # Display win screen for 3 seconds before quitting
+                self.playing = False  # Exit the game loop after displaying win screen
+
     
     def draw_points(self): #mom helped with this part
         # Creating text to display points on
@@ -160,7 +186,7 @@ class Game:
                 self.player_health_bar.decrease(10)  # Decrease health by 10 or any desired amount
             self.last_health_decrease = now            
         if self.player.hitpoints <= 0:
-            self.reset_points() #when the player dies, the points and level reset
+            self.reset_points() #when the player dies, the points and level resetaaa
 
 
     def draw_grid(self):

@@ -228,6 +228,7 @@ class Player(Sprite):
             # self.points += 10
             
             
+            
     # def collide_with_walls2(self, dir): #tried to add wall eating ability
     #     if dir == 'x':
     #         hits = pg.sprite.spritecollide(self, self.game.walls, True)
