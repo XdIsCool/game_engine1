@@ -200,6 +200,9 @@ class Player(Sprite):
         if self.speed >= 300:
             self.kill()
             pg.quit()
+        if self.speed <= 100:
+            print("YOU WIN! (BELIEVE IT OR NOT)")
+            pg.quit()
 
         
         # if self.collide_with_group(self.game.mobs, True):
